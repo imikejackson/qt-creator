@@ -29,6 +29,8 @@
 
 #include <QCoreApplication>
 
+#include <coreplugin/find/searchresultitem.h>
+
 namespace ClangRefactoring {
 
 QtCreatorSearchHandle::QtCreatorSearchHandle(Core::SearchResult *searchResult)
@@ -42,7 +44,11 @@ void QtCreatorSearchHandle::addResult(const QString &fileName,
                                       const QString &lineText,
                                       Core::Search::TextRange textRange)
 {
-    searchResult->addResult(fileName, lineText, textRange);
+    Core::SearchResultItem searchresultitem;
+    searchresultitem.setPath({fileName});
+    searchresultitem.setLineText(lineText);
+    searchresultitem.setMainRange(textRange);
+    searchResult->addResult(searchresultitem);
 }
 
 void QtCreatorSearchHandle::setExpectedResultCount(uint count)
